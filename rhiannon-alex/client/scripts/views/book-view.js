@@ -1,8 +1,8 @@
 'use strict';
 var app = app || {};
 
-(function(module) {
-  $('.icon-menu').on('click', function(event) {
+(function (module) {
+  $('.icon-menu').on('click', function (event) {
     $('.nav-menu').slideToggle(350);
   })
 
@@ -13,7 +13,7 @@ var app = app || {};
 
   const bookView = {};
 
-  bookView.initIndexPage = function(ctx, next) {
+  bookView.initIndexPage = function (ctx, next) {
     resetView();
     $('.book-view').show();
     $('#book-list').empty();
@@ -21,27 +21,27 @@ var app = app || {};
     next()
   }
 
-  bookView.initDetailPage = function(ctx, next) {
+  bookView.initDetailPage = function (ctx, next) {
     resetView();
     $('.detail-view').show();
     $('.book-detail').empty();
     let template = Handlebars.compile($('#book-detail-template').text());
     $('.book-detail').append(template(ctx.book));
 
-    $('#update-btn').on('click', function() {
+    $('#update-btn').on('click', function () {
       page(`/books/${$(this).data('id')}/update`);
     });
 
-    $('#delete-btn').on('click', function() {
+    $('#delete-btn').on('click', function () {
       module.Book.destroy($(this).data('id'));
     });
     next()
   }
 
-  bookView.initCreateFormPage = function() {
+  bookView.initCreateFormPage = function () {
     resetView();
     $('.create-view').show();
-    $('#create-form').on('submit', function(event) {
+    $('#create-form').on('submit', function (event) {
       event.preventDefault();
 
       let book = {
@@ -56,7 +56,7 @@ var app = app || {};
     })
   }
 
-  bookView.initUpdateFormPage = function(ctx) {
+  bookView.initUpdateFormPage = function (ctx) {
     resetView();
     $('.update-view').show()
     $('#update-form input[name="title"]').val(ctx.book.title);
@@ -65,7 +65,7 @@ var app = app || {};
     $('#update-form input[name="image_url"]').val(ctx.book.image_url);
     $('#update-form textarea[name="description"]').val(ctx.book.description);
 
-    $('#update-form').on('submit', function(event) {
+    $('#update-form').on('submit', function (event) {
       event.preventDefault();
 
       let book = {
@@ -81,15 +81,18 @@ var app = app || {};
     })
   };
 
-// COMMENT: What is the purpose of this method?
-  bookView.initSearchFormPage = function() {
+  // COMMENT: What is the purpose of this method?
+  // initializes the search form of the page
+  bookView.initSearchFormPage = function () {
     resetView();
     $('.search-view').show();
-    $('#search-form').on('submit', function(event) {
+    $('#search-form').on('submit', function (event) {
       // COMMENT: What default behavior is being prevented here?
+      // AUTO RELOAD OF THE BLOODY PAGE, NO MORE
       event.preventDefault();
 
       // COMMENT: What is the event.target, below? What will happen if the user does not provide the information needed for the title, author, or isbn properties?
+      // event.target is the form, just a object representing the form. then all props of book will be empty strings, if the user does not provide the info.
       let book = {
         title: event.target.title.value || '',
         author: event.target.author.value || '',
@@ -99,6 +102,7 @@ var app = app || {};
       module.Book.find(book, bookView.initSearchResultsPage);
 
       // COMMENT: Why are these values set to an empty string?
+      // to fit with the above object form thing. 
       event.target.title.value = '';
       event.target.author.value = '';
       event.target.isbn.value = '';
@@ -106,16 +110,20 @@ var app = app || {};
   }
 
   // COMMENT: What is the purpose of this method?
-  bookView.initSearchResultsPage = function() {
+  // to give the user the stuff that they were hoping for when the form was filled.
+  bookView.initSearchResultsPage = function () {
     resetView();
     $('.search-results').show();
     $('#search-list').empty();
 
     // COMMENT: Explain how the .forEach() method is being used below.
+    // appending all the books to the html. oh, and including a button or two.
     module.Book.all.forEach(book => $('#search-list').append(book.toHtml()));
     $('.detail-button a').text('Add to list').attr('href', '/');
-    $('.detail-button').on('click', function(e) {
+    $('.detail-button').on('click', function (e) {
       // COMMENT: Explain the following line of code.
+      // to be honest, this looks like something john would call cute. 
+      // we found the book element in question, went up 3 parents from it, aand got the book with the same book id as ^^this^^
       module.Book.findOne($(this).parent().parent().parent().data('bookid'))
     });
   }

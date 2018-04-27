@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,20 +51,32 @@
   </script>
 
 </head>
+
 <body>
   <header>
     <div class="header-content">
-      <a href="/"><img src="http://www.bootcamps.in/wp-content/uploads/2015/06/code-fellows-shield.png" alt="logo"></a>
+      <a href="/">
+        <img src="http://www.bootcamps.in/wp-content/uploads/2015/06/code-fellows-shield.png" alt="logo">
+      </a>
       <h1>Code Fellows Books</h1>
       <div class="icon-menu"></div>
     </div>
     <nav class="nav-menu">
       <ul>
-        <li><a href="/">home</a></li>
-        <li class="admin"><a href="/books/new">add book</a></li>
-        <li class="admin"><a href="/books/search">search g-books</a></li>
+        <li>
+          <a href="/">home</a>
+        </li>
+        <li class="admin">
+          <a href="/books/new">add book</a>
+        </li>
+        <li class="admin">
+          <a href="/books/search">search g-books</a>
+        </li>
         <!-- COMMENT: This will allow users to log in as an admin using a passphrase, but there is no way to log out. How would you enhance this application to allow a user to log out? -->
-        <li><a href="/admin">login</a></li>
+        <!-- we would replace the login with a logout and it would clear out the login stuff -->
+        <li>
+          <a href="/admin">login</a>
+        </li>
       </ul>
     </nav>
   </header>
@@ -135,10 +148,26 @@
   <footer>
     <aside class="social-links">
       <ul>
-        <li><i class="icon-mail2"><a href=""></a></i></li>
-        <li><i class="icon-twitter"><a href=""></a></i></li>
-        <li><i class="icon-github"><a href=""></a></i></li>
-        <li><i class="icon-linkedin2"><a href=""></a></i></li>
+        <li>
+          <i class="icon-mail2">
+            <a href=""></a>
+          </i>
+        </li>
+        <li>
+          <i class="icon-twitter">
+            <a href=""></a>
+          </i>
+        </li>
+        <li>
+          <i class="icon-github">
+            <a href=""></a>
+          </i>
+        </li>
+        <li>
+          <i class="icon-linkedin2">
+            <a href=""></a>
+          </i>
+        </li>
       </ul>
     </aside>
   </footer>
@@ -154,4 +183,5 @@
   <script src="./scripts/views/admin-view.js" type="text/javascript"></script>
   <script src="./scripts/views/routes.js" type="text/javascript"></script>
 </body>
+
 </html>

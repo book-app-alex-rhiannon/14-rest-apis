@@ -9,7 +9,7 @@ ENV.productionApiUrl = 'insert cloud API server URL here';
 ENV.developmentApiUrl = 'insert local API server URL here';
 ENV.apiUrl = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
 
-(function(module) {
+(function (module) {
   function errorCallback(err) {
     console.error(err);
     module.errorView.initErrorPage(err);
@@ -19,7 +19,7 @@ ENV.apiUrl = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
     Object.keys(rawBookObj).forEach(key => this[key] = rawBookObj[key]);
   }
 
-  Book.prototype.toHtml = function() {
+  Book.prototype.toHtml = function () {
     let template = Handlebars.compile($('#book-list-template').text());
     return template(this);
   }
@@ -44,11 +44,11 @@ ENV.apiUrl = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
       .catch(errorCallback);
 
   Book.update = (book, bookId) =>
-      $.ajax({
-        url: `${ENV.apiUrl}/api/v1/books/${bookId}`,
-        method: 'PUT',
-        data: book,
-      })
+    $.ajax({
+      url: `${ENV.apiUrl}/api/v1/books/${bookId}`,
+      method: 'PUT',
+      data: book,
+    })
       .then(() => page(`/books/${bookId}`))
       .catch(errorCallback)
 
@@ -57,10 +57,11 @@ ENV.apiUrl = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
       url: `${ENV.apiUrl}/api/v1/books/${id}`,
       method: 'DELETE',
     })
-    .then(() => page('/'))
-    .catch(errorCallback)
+      .then(() => page('/'))
+      .catch(errorCallback)
 
   // COMMENT: Where is this method invoked? What is passed in as the 'book' argument when invoked? What callback will be invoked after Book.loadAll is invoked?
+  // it is in book-view. initSearchResultsPage calls this methid within it. the book is a book created in the form that is passed in by the user the call back is the book.initSearchResultsPage
   Book.find = (book, callback) =>
     $.get(`${ENV.apiUrl}/api/v1/books/find`, book)
       .then(Book.loadAll)
@@ -68,10 +69,11 @@ ENV.apiUrl = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
       .catch(errorCallback)
 
   // COMMENT: Where is this method invoked? How does it differ from the Book.find method, above?
+  // initSearchResultsPage calls this method, this differs because the 
   Book.findOne = isbn =>
     $.get(`${ENV.apiUrl}/api/v1/books/find/${isbn}`)
-    .then(Book.create)
-    .catch(errorCallback)
+      .then(Book.create)
+      .catch(errorCallback)
 
   module.Book = Book;
 })(app)
