@@ -5,9 +5,9 @@ var app = app || {};
 const ENV = {};
 
 ENV.isProduction = window.location.protocol === 'https:';
-ENV.productionApiUrl = 'insert cloud API server URL here';
-ENV.developmentApiUrl = 'insert local API server URL here';
-ENV.apiUrl = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
+ENV.productionApiUrl = 'https://gentle-forest-76052.herokuapp.com';
+ENV.developmentApiUrl = 'http://localhost:3000';
+ENV.apiUrl = ENV.isProduction ? ENV.productApiUrl : ENV.developmentApiUrl;
 
 (function (module) {
   function errorCallback(err) {
@@ -25,12 +25,15 @@ ENV.apiUrl = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
   }
 
   Book.all = [];
-  Book.loadAll = rows => Book.all = rows.sort((a, b) => b.title - a.title).map(book => new Book(book));
-  Book.fetchAll = callback =>
-    $.get(`${ENV.apiUrl}/api/v1/books`)
+  Book.loadAll = rows => {    
+    Book.all = rows.sort((a, b) => b.title - a.title)
+    .map(book => new Book(book))
+  };
+  Book.fetchAll = (callback ) =>{
+    return $.get(`${ENV.apiUrl}/api/v1/books`)
       .then(Book.loadAll)
       .then(callback)
-      .catch(errorCallback);
+      .catch(errorCallback)};
 
   Book.fetchOne = (ctx, callback) =>
     $.get(`${ENV.apiUrl}/api/v1/books/${ctx.params.book_id}`)
@@ -75,5 +78,5 @@ ENV.apiUrl = ENV.isProduction ? ENV.productionApiUrl : ENV.developmentApiUrl;
       .then(Book.create)
       .catch(errorCallback)
 
-  module.Book = Book;
+    module.Book = Book;
 })(app)

@@ -14,6 +14,10 @@ var app = app || {};
   const bookView = {};
 
   bookView.initIndexPage = function (ctx, next) {
+    console.log('app', app)
+    console.log('app Book', app.Book)
+    console.log('app Book All', app.Book.all)
+    console.log('app Book Create', app.Book.create)
     resetView();
     $('.book-view').show();
     $('#book-list').empty();

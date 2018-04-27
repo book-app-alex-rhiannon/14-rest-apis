@@ -1,5 +1,6 @@
 'use strict'
 
+
 // Application dependencies
 const express = require('express');
 const cors = require('cors');
@@ -9,7 +10,7 @@ const bodyparser = require('body-parser');
 
 // Application Setup
 const app = express();
-const PORT = process.env.PORT;
+const PORT = 3000;
 const CLIENT_URL = process.env.CLIENT_URL;
 const TOKEN = process.env.TOKEN;
 
@@ -95,7 +96,10 @@ app.get('/api/v1/books/find/:isbn', (req, res) => {
 
 app.get('/api/v1/books', (req, res) => {
   client.query(`SELECT book_id, title, author, image_url, isbn FROM books;`)
-    .then(results => res.send(results.rows))
+    .then(results => {
+      console.log(results.rows)
+      return res.send(results.rows)
+    })
     .catch(console.error);
 });
 
